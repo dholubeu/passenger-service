@@ -1,19 +1,22 @@
 package com.dholubeu.passengerservice.web.dto;
 
 import com.dholubeu.passengerservice.web.validator.ValidAge;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class PassengerDto {
 
     private Long id;
@@ -21,11 +24,6 @@ public class PassengerDto {
     @NotEmpty(message = "Email is required")
     @Email(message = "Email is not valid")
     private String email;
-
-    @NotEmpty(message = "Password is required")
-    @Length(min = 8, message = "Password must be longer than 8 characters")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
 
     @NotEmpty(message = "Name is required")
     @Length(min = 3, max = 60, message = "Name must be between 3 and 60 characters")

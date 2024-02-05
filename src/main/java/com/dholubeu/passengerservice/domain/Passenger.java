@@ -6,14 +6,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
-@Table(name = "passengers")
 @Entity
+@Table(name = "passengers")
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class Passenger {
 
     @Id
@@ -21,8 +25,6 @@ public class Passenger {
     private Long id;
 
     private String email;
-
-    private String password;
 
     private String name;
 
