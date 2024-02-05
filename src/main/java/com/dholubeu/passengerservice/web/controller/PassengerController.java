@@ -26,7 +26,7 @@ public class PassengerController {
     private final PassengerService passengerService;
     private final PassengerMapper passengerMapper;
 
-    @PostMapping("/registration")
+    @PostMapping
     public PassengerDto create(@RequestBody @Validated PassengerDto passengerDto) {
         Passenger passenger = passengerMapper.toEntity(passengerDto);
         passenger = passengerService.create(passenger);
