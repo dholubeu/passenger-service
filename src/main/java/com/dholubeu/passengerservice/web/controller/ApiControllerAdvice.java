@@ -1,6 +1,5 @@
 package com.dholubeu.passengerservice.web.controller;
 
-import com.dholubeu.passengerservice.domain.exception.PasswordMismatchException;
 import com.dholubeu.passengerservice.domain.exception.ResourceAlreadyExistsException;
 import com.dholubeu.passengerservice.domain.exception.ResourceDoesNotExistException;
 import com.dholubeu.passengerservice.web.dto.ResponseDto;
@@ -29,13 +28,6 @@ public class ApiControllerAdvice {
                 .collect(Collectors.toList());
         log.error(ex.getMessage());
         return new ResponseDto(errors);
-    }
-
-    @ExceptionHandler(PasswordMismatchException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseDto handlePasswordMismatchException(PasswordMismatchException ex) {
-        log.error(ex.getMessage());
-        return new ResponseDto(List.of(ex.getMessage()));
     }
 
     @ExceptionHandler(ResourceDoesNotExistException.class)

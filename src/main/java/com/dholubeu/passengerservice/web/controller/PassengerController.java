@@ -2,12 +2,9 @@ package com.dholubeu.passengerservice.web.controller;
 
 
 import com.dholubeu.passengerservice.domain.Passenger;
-import com.dholubeu.passengerservice.domain.Password;
 import com.dholubeu.passengerservice.service.PassengerService;
 import com.dholubeu.passengerservice.web.dto.PassengerDto;
-import com.dholubeu.passengerservice.web.dto.PasswordDto;
 import com.dholubeu.passengerservice.web.mapper.PassengerMapper;
-import com.dholubeu.passengerservice.web.mapper.PasswordMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +25,6 @@ public class PassengerController {
 
     private final PassengerService passengerService;
     private final PassengerMapper passengerMapper;
-    private final PasswordMapper passwordMapper;
 
     @PostMapping("/registration")
     public PassengerDto create(@RequestBody @Validated PassengerDto passengerDto) {
@@ -56,19 +52,5 @@ public class PassengerController {
         return passengerMapper.toDto(passenger);
     }
 
-    @PutMapping("/passwords/{id}")
-    public PassengerDto updatePassword(@PathVariable Long id,
-                                       @RequestBody @Validated PasswordDto passwordDto) {
-        Password password = passwordMapper.toEntity(passwordDto);
-        Passenger passenger = passengerService.updatePassword(id, password);
-        return passengerMapper.toDto(passenger);
-    }
-
-    @PutMapping("/passwords/reset/{id}")
-    public PassengerDto resetPassword(@PathVariable Long id,
-                                      @RequestParam String newPassword) {
-        Passenger passenger = passengerService.resetPassword(id, newPassword);
-        return passengerMapper.toDto(passenger);
-    }
 
 }
