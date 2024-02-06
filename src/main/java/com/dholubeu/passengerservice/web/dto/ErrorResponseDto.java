@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 
-public class ResponseDto {
+public class ErrorResponseDto {
 
     private List<String> errors;
 

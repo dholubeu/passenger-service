@@ -2,7 +2,7 @@ package com.dholubeu.passengerservice.web.controller;
 
 import com.dholubeu.passengerservice.domain.exception.ResourceAlreadyExistsException;
 import com.dholubeu.passengerservice.domain.exception.ResourceDoesNotExistException;
-import com.dholubeu.passengerservice.web.dto.ResponseDto;
+import com.dholubeu.passengerservice.web.dto.ErrorResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -20,28 +20,28 @@ public class ApiControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseDto handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public ErrorResponseDto handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
         log.error(ex.getMessage());
-        return new ResponseDto(errors);
+        return new ErrorResponseDto(errors);
     }
 
     @ExceptionHandler(ResourceDoesNotExistException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseDto handleResourceDoesNotExistException(ResourceDoesNotExistException ex) {
+    public ErrorResponseDto handleResourceDoesNotExistException(ResourceDoesNotExistException ex) {
         log.error(ex.getMessage());
-        return new ResponseDto(List.of(ex.getMessage()));
+        return new ErrorResponseDto(List.of(ex.getMessage()));
     }
 
     @ExceptionHandler(ResourceAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseDto handleResourceAlreadyExistsException(ResourceAlreadyExistsException ex) {
+    public ErrorResponseDto handleResourceAlreadyExistsException(ResourceAlreadyExistsException ex) {
         log.error(ex.getMessage());
-        return new ResponseDto(List.of(ex.getMessage()));
+        return new ErrorResponseDto(List.of(ex.getMessage()));
     }
 
 }
