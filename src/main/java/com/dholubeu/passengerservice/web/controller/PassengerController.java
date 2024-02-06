@@ -6,6 +6,7 @@ import com.dholubeu.passengerservice.service.PassengerService;
 import com.dholubeu.passengerservice.web.dto.PassengerDto;
 import com.dholubeu.passengerservice.web.mapper.PassengerMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.math.BigDecimal;
 
@@ -27,6 +29,7 @@ public class PassengerController {
     private final PassengerMapper passengerMapper;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public PassengerDto create(@RequestBody @Validated PassengerDto passengerDto) {
         Passenger passenger = passengerMapper.toEntity(passengerDto);
         passenger = passengerService.create(passenger);
@@ -34,12 +37,14 @@ public class PassengerController {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public PassengerDto findById(@PathVariable Long id) {
         Passenger passenger = passengerService.findById(id);
         return passengerMapper.toDto(passenger);
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public PassengerDto update(@RequestBody @Validated PassengerDto passengerDto) {
         Passenger passenger = passengerMapper.toEntity(passengerDto);
         passenger = passengerService.update(passenger);
@@ -47,6 +52,7 @@ public class PassengerController {
     }
 
     @PutMapping("/ratings/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public PassengerDto updateRating(@PathVariable Long id, @RequestParam BigDecimal rating) {
         Passenger passenger = passengerService.updateRating(id, rating);
         return passengerMapper.toDto(passenger);
