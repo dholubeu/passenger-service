@@ -4,6 +4,8 @@ package com.dholubeu.passengerservice.web.controller;
 import com.dholubeu.passengerservice.domain.Passenger;
 import com.dholubeu.passengerservice.service.PassengerService;
 import com.dholubeu.passengerservice.web.dto.PassengerDto;
+import com.dholubeu.passengerservice.web.dto.validation.OnCreate;
+import com.dholubeu.passengerservice.web.dto.validation.OnUpdate;
 import com.dholubeu.passengerservice.web.mapper.PassengerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,7 @@ public class PassengerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PassengerDto create(@RequestBody @Validated PassengerDto passengerDto) {
+    public PassengerDto create(@RequestBody @Validated(OnCreate.class) PassengerDto passengerDto) {
         Passenger passenger = passengerMapper.toEntity(passengerDto);
         passenger = passengerService.create(passenger);
         return passengerMapper.toDto(passenger);
@@ -45,9 +47,10 @@ public class PassengerController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public PassengerDto update(@RequestBody @Validated PassengerDto passengerDto) {
+    public PassengerDto update(@PathVariable Long id,
+                               @RequestBody @Validated(OnUpdate.class) PassengerDto passengerDto) {
         Passenger passenger = passengerMapper.toEntity(passengerDto);
-        passenger = passengerService.update(passenger);
+        passenger = passengerService.update(id, passenger);
         return passengerMapper.toDto(passenger);
     }
 

@@ -12,7 +12,8 @@ public interface PassengerService {
 
     Passenger findByEmail(String email);
 
-    Passenger update(Passenger passenger);
+    Passenger update(Long id, Passenger passenger);
+
 
     Passenger updateRating(Long id, BigDecimal rating);
 

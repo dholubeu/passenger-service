@@ -44,8 +44,15 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public Passenger update(Passenger passenger) {
-        return passengerRepository.save(passenger);
+    public Passenger update(Long id, Passenger passenger) {
+        Passenger passengerUpdated = findById(id);
+        passengerUpdated = Passenger.builder()
+                .name(passenger.getName())
+                .surname(passenger.getSurname())
+                .dateOfBirth(passenger.getDateOfBirth())
+                .phoneNumber(passenger.getPhoneNumber())
+                .build();
+        return passengerRepository.save(passengerUpdated);
     }
 
     @Override
