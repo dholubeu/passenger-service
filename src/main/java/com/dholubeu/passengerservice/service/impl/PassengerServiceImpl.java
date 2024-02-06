@@ -15,13 +15,16 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class PassengerServiceImpl implements PassengerService {
 
+    public static final String RESOURCE_ALREADY_EXISTS_MESSAGE = "Passenger with email %s already exists";
+    public static final String RESOURCE_DOES_NOT_EXIST_BY_ID_MESSAGE = "Passenger with id %d does not exist";
+    public static final String RESOURCE_DOES_NOT_EXIST_BY_EMAIL_MESSAGE = "Passenger with email %s does not exist";
     private final PassengerRepository passengerRepository;
 
     @Override
     public Passenger create(Passenger passenger) {
         if (passengerRepository.existsByEmail(passenger.getEmail())) {
-            throw new ResourceAlreadyExistsException("Passenger with email " +
-                    passenger.getEmail() + " already exists");
+            throw new ResourceAlreadyExistsException(String.format(
+                    RESOURCE_ALREADY_EXISTS_MESSAGE, passenger.getEmail()));
         }
         return passengerRepository.save(passenger);
     }
@@ -29,15 +32,15 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public Passenger findById(Long id) {
         return passengerRepository.findById(id).orElseThrow(
-                () -> new ResourceDoesNotExistException(
-                        "Passenger with id " + id + " does not exist"));
+                () -> new ResourceDoesNotExistException(String.format(
+                        RESOURCE_DOES_NOT_EXIST_BY_ID_MESSAGE, id)));
     }
 
     @Override
     public Passenger findByEmail(String email) {
         return passengerRepository.findByEmail(email).orElseThrow(
-                () -> new ResourceDoesNotExistException(
-                        "Passenger with email " + email + " does not exist"));
+                () -> new ResourceDoesNotExistException(String.format(
+                        RESOURCE_DOES_NOT_EXIST_BY_EMAIL_MESSAGE, email)));
     }
 
     @Override
