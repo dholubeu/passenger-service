@@ -13,6 +13,6 @@ create table passengers
     surname varchar(60) not null,
     date_of_birth date not null,
     phone_number varchar(12) not null,
-    rating real default 0.0,
+    rating real default 0.0 not null,
     primary key (id)
 );
