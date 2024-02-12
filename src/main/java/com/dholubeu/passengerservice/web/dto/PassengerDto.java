@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -47,8 +45,6 @@ public class PassengerDto {
             groups = {OnCreate.class, OnUpdate.class})
     private String phoneNumber;
 
-    @Max(value = 5, message = "Rating must be less than 5")
-    @Min(value = 1, message = "Rating must be more than 1")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BigDecimal rating;
 
