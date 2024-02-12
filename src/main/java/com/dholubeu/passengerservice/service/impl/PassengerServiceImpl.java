@@ -26,6 +26,7 @@ public class PassengerServiceImpl implements PassengerService {
             throw new ResourceAlreadyExistsException(String.format(
                     RESOURCE_ALREADY_EXISTS_MESSAGE, passenger.getEmail()));
         }
+        passenger.setRating(BigDecimal.valueOf(0.0));
         return passengerRepository.save(passenger);
     }
 
