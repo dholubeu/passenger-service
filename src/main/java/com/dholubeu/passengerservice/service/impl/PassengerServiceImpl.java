@@ -48,10 +48,13 @@ public class PassengerServiceImpl implements PassengerService {
     public Passenger update(Long id, Passenger passenger) {
         Passenger passengerUpdated = findById(id);
         passengerUpdated = Passenger.builder()
+                .id(passenger.getId())
                 .name(passenger.getName())
+                .email(passengerUpdated.getEmail())
                 .surname(passenger.getSurname())
                 .dateOfBirth(passenger.getDateOfBirth())
                 .phoneNumber(passenger.getPhoneNumber())
+                .rating(passengerUpdated.getRating())
                 .build();
         return passengerRepository.save(passengerUpdated);
     }
