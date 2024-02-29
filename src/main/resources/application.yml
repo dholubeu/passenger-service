@@ -1,7 +1,9 @@
 server:
   port: 8010
 
-spring:
+  spring:
+  application:
+    name: passengers
   config:
     import: optional:file:.env[.properties]
   datasource:
@@ -11,4 +13,8 @@ spring:
   liquibase:
     change-log: classpath:db.changelog/db.changelog-master.yml
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST}:8761/eureka
 
