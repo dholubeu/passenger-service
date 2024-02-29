@@ -54,7 +54,7 @@ public class PassengerController {
         return passengerMapper.toDto(passenger);
     }
 
-    @PutMapping("{id}/ratings")
+    @PutMapping("/{id}/ratings")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public PassengerDto updateRating(@PathVariable Long id, @RequestParam BigDecimal rating) {
         Passenger passenger = passengerService.updateRating(id, rating);
