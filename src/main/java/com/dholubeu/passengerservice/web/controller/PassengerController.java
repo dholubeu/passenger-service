@@ -51,5 +51,4 @@ public class PassengerController {
         return passengerService.updateRating(id, rating);
     }
 
-
 }

@@ -1,6 +1,5 @@
 package com.dholubeu.passengerservice.service.impl;
 
-
 import com.dholubeu.passengerservice.domain.Passenger;
 import com.dholubeu.passengerservice.domain.exception.ResourceAlreadyExistsException;
 import com.dholubeu.passengerservice.domain.exception.ResourceDoesNotExistException;
@@ -21,7 +20,6 @@ import static com.dholubeu.passengerservice.util.Constants.RESOURCE_DOES_NOT_EXI
 @Service
 @RequiredArgsConstructor
 public class PassengerServiceImpl implements PassengerService {
-
 
     private final PassengerRepository passengerRepository;
     private final PassengerMapper passengerMapper;
