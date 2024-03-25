@@ -1,12 +1,9 @@
 package com.dholubeu.passengerservice.web.controller;
 
-
-import com.dholubeu.passengerservice.domain.Passenger;
 import com.dholubeu.passengerservice.service.PassengerService;
 import com.dholubeu.passengerservice.web.dto.PassengerDto;
 import com.dholubeu.passengerservice.web.dto.validation.OnCreate;
 import com.dholubeu.passengerservice.web.dto.validation.OnUpdate;
-import com.dholubeu.passengerservice.web.mapper.PassengerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -28,37 +25,30 @@ import java.math.BigDecimal;
 public class PassengerController {
 
     private final PassengerService passengerService;
-    private final PassengerMapper passengerMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PassengerDto create(@RequestBody @Validated(OnCreate.class) PassengerDto passengerDto) {
-        Passenger passenger = passengerMapper.toEntity(passengerDto);
-        passenger = passengerService.create(passenger);
-        return passengerMapper.toDto(passenger);
+        return passengerService.create(passengerDto);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PassengerDto findById(@PathVariable Long id) {
-        Passenger passenger = passengerService.findById(id);
-        return passengerMapper.toDto(passenger);
+        return passengerService.findById(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public PassengerDto update(@PathVariable Long id,
                                @RequestBody @Validated(OnUpdate.class) PassengerDto passengerDto) {
-        Passenger passenger = passengerMapper.toEntity(passengerDto);
-        passenger = passengerService.update(id, passenger);
-        return passengerMapper.toDto(passenger);
+        return passengerService.update(id, passengerDto);
     }
 
-    @PutMapping("{id}/ratings")
+    @PutMapping("/{id}/ratings")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public PassengerDto updateRating(@PathVariable Long id, @RequestParam BigDecimal rating) {
-        Passenger passenger = passengerService.updateRating(id, rating);
-        return passengerMapper.toDto(passenger);
+        return passengerService.updateRating(id, rating);
     }
 
 
