@@ -1,20 +1,21 @@
 package com.dholubeu.passengerservice.service;
 
 import com.dholubeu.passengerservice.domain.Passenger;
+import com.dholubeu.passengerservice.web.dto.PassengerDto;
 
 import java.math.BigDecimal;
 
 public interface PassengerService {
 
-    Passenger create(Passenger passenger);
+    PassengerDto create(PassengerDto passengerDto);
 
-    Passenger findById(Long id);
+    PassengerDto findById(Long id);
 
-    Passenger findByEmail(String email);
+    PassengerDto findByEmail(String email);
 
-    Passenger update(Long id, Passenger passenger);
+    PassengerDto update(Long id, PassengerDto passengerDto);
 
 
-    Passenger updateRating(Long id, BigDecimal rating);
+    PassengerDto updateRating(Long id, BigDecimal rating);
 
 }
