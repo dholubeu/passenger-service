@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
-
 import static com.dholubeu.passengerservice.util.Constants.RESOURCE_ALREADY_EXISTS_MESSAGE;
 import static com.dholubeu.passengerservice.util.Constants.RESOURCE_DOES_NOT_EXIST_BY_ID_MESSAGE;
 import static com.dholubeu.passengerservice.util.Constants.RESOURCE_DOES_NOT_EXIST_BY_EMAIL_MESSAGE;
@@ -26,19 +25,19 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public PassengerDto create(PassengerDto passengerDto) {
-
         if (passengerRepository.existsByEmail(passengerDto.getEmail())) {
             throw new ResourceAlreadyExistsException(String.format(
                     RESOURCE_ALREADY_EXISTS_MESSAGE, passengerDto.getEmail()));
         }
         Passenger passenger = passengerMapper.toEntity(passengerDto);
         passenger.setRating(BigDecimal.valueOf(0.0));
+        passenger = passengerRepository.save(passenger);
         return passengerMapper.toDto(passenger);
     }
 
     @Override
     public PassengerDto findById(Long id) {
-        var passenger = passengerRepository.findById(id).orElseThrow(
+        Passenger passenger = passengerRepository.findById(id).orElseThrow(
                 () -> new ResourceDoesNotExistException(String.format(
                         RESOURCE_DOES_NOT_EXIST_BY_ID_MESSAGE, id)));
         return passengerMapper.toDto(passenger);
@@ -46,7 +45,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public PassengerDto findByEmail(String email) {
-        var passenger = passengerRepository.findByEmail(email).orElseThrow(
+        Passenger passenger = passengerRepository.findByEmail(email).orElseThrow(
                 () -> new ResourceDoesNotExistException(String.format(
                         RESOURCE_DOES_NOT_EXIST_BY_EMAIL_MESSAGE, email)));
         return passengerMapper.toDto(passenger);
@@ -56,9 +55,8 @@ public class PassengerServiceImpl implements PassengerService {
     public PassengerDto update(Long id, PassengerDto passengerDto) {
         Passenger passenger = passengerMapper.toEntity(passengerDto);
         Passenger passengerUpdated = passengerRepository.findById(id)
-                .orElseThrow(() -> new ResourceDoesNotExistException(""));
-        ;
-
+                .orElseThrow(() -> new ResourceDoesNotExistException(String.format(
+                        RESOURCE_DOES_NOT_EXIST_BY_ID_MESSAGE, id)));
         passengerUpdated = Passenger.builder()
                 .id(passenger.getId())
                 .name(passenger.getName())
@@ -69,14 +67,15 @@ public class PassengerServiceImpl implements PassengerService {
                 .rating(passengerUpdated.getRating())
                 .build();
         passengerRepository.save(passengerUpdated);
-        return passengerMapper.toDto(passenger);
+        return passengerMapper.toDto(passengerUpdated);
 
     }
 
     @Override
     public PassengerDto updateRating(Long id, BigDecimal rating) {
         Passenger passenger = passengerRepository.findById(id)
-                .orElseThrow(() -> new ResourceDoesNotExistException(""));
+                .orElseThrow(() -> new ResourceDoesNotExistException(String.format(
+                        RESOURCE_DOES_NOT_EXIST_BY_ID_MESSAGE, id)));
         passenger.setRating(rating);
         passengerRepository.save(passenger);
         return passengerMapper.toDto(passenger);

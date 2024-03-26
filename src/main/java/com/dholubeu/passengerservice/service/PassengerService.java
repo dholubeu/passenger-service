@@ -13,7 +13,6 @@ public interface PassengerService {
 
     PassengerDto update(Long id, PassengerDto passengerDto);
 
-
     PassengerDto updateRating(Long id, BigDecimal rating);
 
 }
