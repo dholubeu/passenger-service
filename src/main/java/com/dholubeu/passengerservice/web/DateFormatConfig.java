@@ -13,8 +13,6 @@ import static com.dholubeu.passengerservice.util.Constants.DATE_FORMAT;
 @Configuration
 public class DateFormatConfig {
 
-
-
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jsomCustomizer() {
         return builder -> builder.simpleDateFormat(DATE_FORMAT)
